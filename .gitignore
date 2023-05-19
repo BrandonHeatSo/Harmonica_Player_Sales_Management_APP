@@ -21,3 +21,6 @@
 /yarn-error.log
 
 .byebug_history
+
+# .envファイルをGitの管理から外す処理。
+/.env

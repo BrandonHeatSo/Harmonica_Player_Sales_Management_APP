@@ -8,6 +8,9 @@ end
 gem 'rails', '~> 5.1.7'
 gem 'sqlite3'
 gem 'devise' # LINEログイン用Gemを導入。
+gem 'omniauth-line' # LINEログイン用の認証Gemを導入。
+gem 'omniauth-rails_csrf_protection' # LINEログイン用の保護Gemを導入。
+gem 'dotenv-rails' # LINEログイン用の環境変数設定Gemを導入。
 gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
