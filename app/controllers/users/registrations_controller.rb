@@ -17,7 +17,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def new
     if logged_in? && !current_user.admin?
       flash[:info] = 'すでにログインしています。'
-      redirect_to current_user
+      redirect_to user_url(current_user)
     end
     @user = User.new
   end
@@ -27,7 +27,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if @user.save
       log_in @user
       flash[:success] = 'ユーザーの新規作成に成功しました。'
-      redirect_to @user
+      redirect_to user_url(@user)
     else
       render :new
     end
@@ -39,7 +39,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def update
     if  @user.update_attributes(user_params)
       flash[:success] = "ユーザー情報を更新しました。"
-      redirect_to @user
+      redirect_to user_url(@user)
     else
       render :edit
     end
