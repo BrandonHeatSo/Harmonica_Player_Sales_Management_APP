@@ -4,6 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[line] # LINEログイン用の連携設定を追加。
+  
+  validates :name, presence: true, length: { maximum: 50 }
+  validates :email, length: { maximum: 100 }
+  validates :password, allow_nil: true
 
   def social_profile(provider)
     social_profiles.select { |sp| sp.provider == provider.to_s }.first
