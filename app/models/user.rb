@@ -5,9 +5,13 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[line] # LINEログイン用の連携設定を追加。
   
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :name, presence: true, length: { maximum: 50 }
-  validates :email, length: { maximum: 100 }
-  validates :password, allow_nil: true
+  validates :email, presence: true, length: { maximum: 100 },
+                    format: { with: VALID_EMAIL_REGEX },
+                    uniqueness: true
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+  validates_confirmation_of :password
 
   def social_profile(provider)
     social_profiles.select { |sp| sp.provider == provider.to_s }.first
