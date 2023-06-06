@@ -2,8 +2,9 @@ Rails.application.routes.draw do
   root 'static_pages#top'
 
   devise_for :users, controllers: {
-    omniauth_callbacks: "omniauth_callbacks",
-    registrations: 'users/registrations'
+    sessions: 'users/sessions',
+    registrations: 'users/registrations',
+    omniauth_callbacks: 'users/omniauth_callbacks'
   }
 
   get 'users', to: 'users/registrations#index' # ユーザーindexアクションの生成

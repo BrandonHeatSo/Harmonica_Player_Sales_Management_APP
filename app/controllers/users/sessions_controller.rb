@@ -1,27 +1,35 @@
-# frozen_string_literal: true
+class SessionsController < Devise::SessionsController
+  
+  def new
+    if logged_in?
+      flash[:info] = 'すでにログインしています。'
+      redirect_to current_user
+    else
+      super
+    end
+  end
 
-class Users::SessionsController < Devise::SessionsController
-  # before_action :configure_sign_in_params, only: [:create]
+  def create
+    self.resource = warden.authenticate(auth_options)
+    if resource.present?
+      sign_in(resource_name, resource)
+      flash[:success] = 'ログインしました。'
+      respond_with resource, location: after_sign_in_path_for(resource)
+    else
+      flash.now[:danger] = '認証に失敗しました。'
+      render :new
+    end
+  end
 
-  # GET /resource/sign_in
-  # def new
-  #   super
-  # end
+  def destroy
+    signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+    flash[:success] = 'ログアウトしました。' if signed_out
+    respond_to_on_destroy
+  end
 
-  # POST /resource/sign_in
-  # def create
-  #   super
-  # end
+  private
 
-  # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
-
-  # protected
-
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_in_params
-  #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
-  # end
+  def after_sign_in_path_for(resource)
+    user_path(resource)
+  end
 end
