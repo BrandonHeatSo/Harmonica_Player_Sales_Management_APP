@@ -10,9 +10,9 @@ module SessionsHelper
     sign_out(current_user)
   end
 
-  # Deviseのメソッドを使用して現在のユーザーを取得する
+  # 現在のユーザーを返す
   def current_user
-    current_user
+    @current_user ||= user_signed_in? ? User.find_by(id: session[:user_id]) : nil
   end
 
   # ユーザーがログインしていればtrue、そうでなければfalseを返す
