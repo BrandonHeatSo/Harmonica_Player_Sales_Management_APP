@@ -1,4 +1,5 @@
-class SessionsController < Devise::SessionsController
+class Users::SessionsController < Devise::SessionsController
+  include SessionsHelper
   
   def new
     if logged_in?

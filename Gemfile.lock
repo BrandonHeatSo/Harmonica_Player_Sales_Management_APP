@@ -281,6 +281,7 @@ DEPENDENCIES
   puma (~> 3.7)
   rails (~> 5.1.7)
   rails-i18n
+  responders (~> 3.0)
   sass-rails (~> 5.0)
   selenium-webdriver
   spring
