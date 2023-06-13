@@ -24,10 +24,10 @@ class Users::SessionsController < Devise::SessionsController
   # end  
 
   def create
-    puts "=== Debug Start ==="
-    puts "auth_options: #{auth_options.inspect}"
+    puts "=== Debug Start ===" # アクション用デバッグ記述1（エラー解決後は外す予定）
+    puts "auth_options: #{auth_options.inspect}" # アクション用デバッグ記述2（エラー解決後は外す予定）
     self.resource = warden.authenticate!(:scope => resource_name)
-    puts "resource: #{resource.inspect}"
+    puts "resource: #{resource.inspect}" # アクション用デバッグ記述3（エラー解決後は外す予定）
   
     if resource && resource.save
       sign_in(resource_name, resource)
@@ -38,7 +38,7 @@ class Users::SessionsController < Devise::SessionsController
       render :new
     end
   
-    puts "=== Debug End ==="
+    puts "=== Debug End ===" # アクション用デバッグ記述4（エラー解決後は外す予定）
   end
   
   def destroy
