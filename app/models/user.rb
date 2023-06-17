@@ -33,4 +33,8 @@ class User < ApplicationRecord
     self.save!
   end
   
+  def admin?
+    admin # adminカラムがtrueの場合を管理者とする
+  end
+
 end
