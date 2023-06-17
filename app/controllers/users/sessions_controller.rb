@@ -2,7 +2,7 @@ class Users::SessionsController < Devise::SessionsController
   include SessionsHelper
   
   def new
-    if logged_in?
+    if user_signed_in?
       flash[:info] = 'すでにログインしています。'
       redirect_to current_user
     else

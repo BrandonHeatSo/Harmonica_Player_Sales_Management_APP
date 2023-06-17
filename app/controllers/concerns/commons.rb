@@ -9,12 +9,12 @@ module Commons
   end
 
   # ログイン済みのユーザーか確認します。
-  def logged_in_user
-    unless user_signed_in?
-      flash[:danger] = 'ログインしてください。'
-      redirect_to root_url
-    end
-  end
+  # def logged_in_user
+    # unless user_signed_in?
+      # flash[:danger] = 'ログインしてください。'
+      # redirect_to root_url
+    # end
+  # end
 
   # アクセスしたユーザーが現在ログインしているユーザーか確認します。
   def correct_user
