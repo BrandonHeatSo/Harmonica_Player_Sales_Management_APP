@@ -1,5 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
   include SessionsHelper
+  include Commons
   
   def new
     if user_signed_in?

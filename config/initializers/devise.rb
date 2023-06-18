@@ -10,6 +10,9 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
 
+  # Devise用カスタマイズ版ユーザーviewを生成する為の設定。
+  config.scoped_views = true
+  
   # LINEログインの設定を追加＆Deviseに反映。
   config.omniauth :line, ENV['LINE_KEY'], ENV['LINE_SECRET']
   

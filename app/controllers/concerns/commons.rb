@@ -18,7 +18,7 @@ module Commons
 
   # アクセスしたユーザーが現在ログインしているユーザーか確認します。
   def correct_user
-    unless current_user?(@user)
+    unless current_user == @user
       flash[:danger] = "本人アカウントでログインしてください。"
       redirect_to(root_url)
     end
@@ -34,7 +34,7 @@ module Commons
 
   # 管理権限者、または現在ログインしているユーザー本人を許可します。
   def admin_or_correct_user
-    unless current_user?(@user) || current_user.admin?
+    unless current_user == @user || current_user.admin?
       flash[:danger] = "権限がありません。"
       redirect_to(root_url)
     end

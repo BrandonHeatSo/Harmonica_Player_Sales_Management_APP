@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   include Commons
 
   before_action :set_user, only: [:show]
-  before_action :logged_in_user, only: [:index, :show]
+  before_action :authenticate_user!, only: [:index, :show]
   before_action :correct_user, only: [:show]
   before_action :admin_user, only: [:index]
 
