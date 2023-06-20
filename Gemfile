@@ -18,6 +18,7 @@ gem 'bootstrap-sass' # BootstrapフレームワークのCSSスタイル用Gemを
 gem 'will_paginate' # ページネーション用Gemを導入。
 gem 'bootstrap-will_paginate' # ページネーションのBootstrapスタイル用Gemを導入。
 gem 'jquery-rails' # jQuery JavaScriptライブラリ用Gemを導入。
+gem 'popper_js' # ポップオーバーやドロップダウンなどの便利機能用Gemを導入。
 gem 'puma', '~> 3.7'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
