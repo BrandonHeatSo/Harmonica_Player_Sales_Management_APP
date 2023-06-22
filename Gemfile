@@ -13,6 +13,8 @@ gem 'omniauth-line' # LINEログイン用の認証Gemを導入。
 gem 'omniauth-rails_csrf_protection' # LINEログイン用の保護Gemを導入。
 gem 'dotenv-rails' # LINEログイン用の環境変数設定Gemを導入。
 gem 'rails-i18n' # 日本語化用Gemを導入。
+gem 'devise-i18n' # Devise機能の日本語化用Gemを導入。
+gem 'devise-i18n-views' # Devise用view表示の日本語化用Gemを導入。
 gem 'faker' # サンプルユーザー生成用Gemを導入。
 gem 'bootstrap-sass' # BootstrapフレームワークのCSSスタイル用Gemを導入。
 gem 'will_paginate' # ページネーション用Gemを導入。

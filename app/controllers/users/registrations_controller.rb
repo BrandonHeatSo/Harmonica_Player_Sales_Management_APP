@@ -18,7 +18,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     @user = User.new(user_params)
     if @user.save
-      log_in @user
+      sign_in @user
       flash[:success] = 'ユーザーの新規作成に成功しました。'
       redirect_to user_url(@user)
     else
@@ -54,6 +54,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     
     # paramsハッシュからユーザーを取得します。
     def set_user
-      @user = User.find(params[:id])
+      @user = current_user
     end
 end
