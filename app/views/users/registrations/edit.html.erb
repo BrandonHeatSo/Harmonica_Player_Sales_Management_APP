@@ -28,21 +28,12 @@
       <div class="field">
         <%= f.label :password, class: "label-#{yield(:class_text)}" %> <i>( 変更しない場合、空白のままにしてください。)</i><br />
         <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
-        <% if @minimum_password_length %>
-          <em>※パスワードには<%= @minimum_password_length %>文字以上が必要です。※</em>
-        <% end %>
       </div>
       <br />
 
       <div class="field">
         <%= f.label :password_confirmation, class: "label-#{yield(:class_text)}" %><br />
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
-      </div>
-      <br />
-
-      <div class="field">
-        <%= f.label :current_password, class: "label-#{yield(:class_text)}" %> <i>( 変更を確認するために、現在のパスワードを入力してください。)</i><br />
-        <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
       </div>
       <br />
 

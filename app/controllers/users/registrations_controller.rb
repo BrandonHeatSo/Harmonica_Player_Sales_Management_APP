@@ -4,7 +4,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :set_user, only: [:edit, :update, :destroy]
   before_action :authenticate_user!, only: [:edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:destroy]
   before_action :admin_or_correct_user, only: :destroy
   
   def new
@@ -27,33 +26,38 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   def edit
+    super
   end
   
   def update
-    if  @user.update_attributes(user_params)
-      flash[:success] = "ユーザー情報を更新しました。"
-      redirect_to user_url(@user)
-    else
-      render :edit
-    end
+    super
   end
 
   def destroy
-    @user.destroy
-    flash[:success] = "#{@user.name}のデータを削除しました。"
-    redirect_to users_url
+    super
   end
+
+  protected
+
+    def update_resource(resource, params)
+      resource.update_without_current_password(params) # 編集更新時にパスワード入力を任意化
+    end
+
+    def after_update_path_for(resource)
+      user_path(@user.id) # 更新後のパスをプロフィールに戻るように設定。
+    end
 
   private
   
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
-    
+  
     # ここから下はユーザーＣ専用のbeforeフィルター
     
     # paramsハッシュからユーザーを取得します。
     def set_user
       @user = current_user
     end
+
 end

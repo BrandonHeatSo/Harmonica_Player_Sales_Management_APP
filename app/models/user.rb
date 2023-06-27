@@ -10,8 +10,21 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 100 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true
-  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-  validates_confirmation_of :password
+  validates :password, presence: true, length: { minimum: 6 }, on: :create
+  # validates_confirmation_of :password
+
+  def update_without_current_password(params, *options)
+    params.delete(:current_password)
+
+    if params[:password].blank? && params[:password_confirmation].blank? 
+      params.delete(:password)
+      params.delete(:password_confirmation)
+    end
+
+    result = update(params, *options)
+    clean_up_passwords
+    result
+  end
 
   def social_profile(provider)
     social_profiles.select { |sp| sp.provider == provider.to_s }.first

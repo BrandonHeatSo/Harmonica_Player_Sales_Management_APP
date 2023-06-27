@@ -1,5 +1,5 @@
 module Commons
-  include SessionsHelper
+  # include SessionsHelper
   
   # beforeフィルター
 
