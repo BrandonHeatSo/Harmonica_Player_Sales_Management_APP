@@ -1,10 +1,12 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   include Commons
 
-  before_action :set_user, only: [:edit, :update, :destroy]
-  before_action :authenticate_user!, only: [:edit, :update, :destroy]
+  before_action :set_user, only: [:edit, :update]
+  # before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:edit, :update]
+  # before_action :authenticate_user!, only: [:edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_or_correct_user, only: :destroy
+  # before_action :admin_or_correct_user, only: :destroy
   
   def new
     if user_signed_in? && !current_user.admin?
@@ -33,9 +35,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
     super
   end
 
-  def destroy
-    super
-  end
+  # def destroy
+    # super
+  # end
 
   protected
 
