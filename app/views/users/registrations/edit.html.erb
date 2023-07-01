@@ -26,14 +26,14 @@
       <br />
 
       <div class="field">
-        <%= f.label :password, class: "label-#{yield(:class_text)}" %> <i>( 変更しない場合、空白のままにしてください。)</i><br />
-        <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+        <%= f.label :password, class: "label-#{yield(:class_text)}" %>
+        <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "変更しない場合、空白のままにしてください。" %>
       </div>
       <br />
 
       <div class="field">
         <%= f.label :password_confirmation, class: "label-#{yield(:class_text)}" %><br />
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "変更しない場合、空白のままにしてください。" %>
       </div>
       <br />
 
