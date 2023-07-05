@@ -7,5 +7,7 @@ Rails.application.routes.draw do
     omniauth_callbacks: 'omniauth_callbacks'
   }
 
-  resources :users, only: [:index, :show, :destroy]
+  resources :users, only: [:index, :show, :destroy] do
+    resources :contents
+  end
 end
