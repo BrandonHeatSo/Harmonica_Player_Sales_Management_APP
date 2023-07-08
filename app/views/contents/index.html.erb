@@ -1,0 +1,19 @@
+<!-- app/views/contents/index.html.erb -->
+<h1>案件内容一覧</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>案件内容名</th>
+      <th>詳細</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @contents.each do |content| %>
+      <tr>
+        <td><%= content.name %></td>
+        <td><%= content.description %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

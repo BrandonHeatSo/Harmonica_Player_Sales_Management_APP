@@ -1,0 +1,12 @@
+<!-- app/views/contents/new.html.erb -->
+<h1>新規案件内容作成</h1>
+
+<%= form_with(model: @content, url: contents_path) do |form| %>
+  <%= form.label :name, '案件内容名' %>
+  <%= form.text_field :name %>
+
+  <%= form.label :description, '詳細' %>
+  <%= form.text_area :description %>
+
+  <%= form.submit '作成' %>
+<% end %>
