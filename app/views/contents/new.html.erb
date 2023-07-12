@@ -1,7 +1,8 @@
 <!-- app/views/contents/new.html.erb -->
 <h1>新規案件内容作成</h1>
 
-<%= form_with(model: @content, url: contents_path) do |form| %>
+<%= form_with(model: @content, url: user_contents_path(current_user)) do |form| %>
+
   <%= form.label :name, '案件内容名' %>
   <%= form.text_field :name %>
 

@@ -1,7 +1,7 @@
 <!-- app/views/contents/edit.html.erb -->
 <h1>案件内容編集</h1>
 
-<%= form_with(model: @content, url: content_path(@content), method: :patch) do |form| %>
+<%= form_with(model: @content, url: user_content_path(current_user, @content), method: :patch) do |form| %>
   <%= form.label :name, '案件内容名' %>
   <%= form.text_field :name %>
 

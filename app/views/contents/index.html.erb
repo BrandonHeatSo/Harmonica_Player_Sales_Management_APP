@@ -1,19 +1,41 @@
-<!-- app/views/contents/index.html.erb -->
+<% provide(:title, 'All Contents') %>
+
 <h1>案件内容一覧</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>案件内容名</th>
-      <th>詳細</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @contents.each do |content| %>
+<div class="col-md-10 col-md-offset-1">
+
+  <div class="btn-users-show">
+    <%= link_to "内容新規作成", new_user_content_path, class: "btn btn-primary" %>
+  </div>
+
+  <table class="table table-bordered table-condensed table-hover" id="table-contents">
+
+    <thead>
+      <br>
       <tr>
-        <td><%= content.name %></td>
-        <td><%= content.description %></td>
+        <th>案件内容名</th>
+        <th>詳細</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @contents.each do |content| %>
+        <tr>
+          <td>
+            <%= link_to "内容編集", edit_user_content_path(content.user_id, content.id),
+                         class: "btn btn-primary" %>
+          </td>
+          <td><%= content.name %></td>
+          <td><%= content.description %></td>
+          <td>
+            <%= link_to "内容削除", user_content_path(content.user_id, content.id),
+                         method: :delete, 
+                         data: { confirm: "削除してよろしいですか？" },
+                         class: "btn btn-primary" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+    
+  </table>
+</div>

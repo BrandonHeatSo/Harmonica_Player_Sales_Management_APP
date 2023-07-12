@@ -16,7 +16,7 @@ class ContentsController < ApplicationController
   def create
     @content = current_user.contents.build(content_params)
     if @content.save
-      redirect_to contents_path, notice: '案件内容が作成されました。'
+      redirect_to user_contents_path(current_user), notice: '案件内容が作成されました。'
     else
       render :new
     end
@@ -27,7 +27,7 @@ class ContentsController < ApplicationController
 
   def update
     if @content.update(content_params)
-      redirect_to contents_path, notice: '案件内容が更新されました。'
+      redirect_to user_contents_path(current_user), notice: '案件内容が更新されました。'
     else
       render :edit
     end
@@ -35,7 +35,7 @@ class ContentsController < ApplicationController
 
   def destroy
     @content.destroy
-    redirect_to contents_path, notice: '案件内容が削除されました。'
+    redirect_to user_contents_path(current_user), notice: '案件内容が削除されました。'
   end
 
   private
