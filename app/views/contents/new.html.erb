@@ -1,13 +1,22 @@
-<!-- app/views/contents/new.html.erb -->
-<h1>新規案件内容作成</h1>
+<% provide(:title, 'New Content') %>
 
-<%= form_with(model: @content, url: user_contents_path(current_user)) do |form| %>
+<h1>案件内容の新規作成</h1>
 
-  <%= form.label :name, '案件内容名' %>
-  <%= form.text_field :name %>
-
-  <%= form.label :description, '詳細' %>
-  <%= form.text_area :description %>
-
-  <%= form.submit '作成' %>
-<% end %>
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <%= form_with(model: @content, url: user_contents_path(current_user), local: true) do |f| %>
+      <%= render 'shared/error_messages', object: @content %>
+      
+      <%= f.label :name, class: "label-form" %>
+      <%= f.text_field :name, class: "form-control" %>
+      
+      <br>
+      <%= f.label :description, class: "label-form" %>
+      <%= f.text_area :description, rows: 3, class: "form-control" %>
+      
+      <br>
+      <%= f.submit "新規登録", class: "btn btn-lg btn-primary btn-form" %>
+      　<%= link_to "キャンセル", user_contents_path(current_user), class: "btn btn-lg btn-default" %>
+    <% end %>
+  </div>
+</div>

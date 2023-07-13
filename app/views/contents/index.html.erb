@@ -1,11 +1,11 @@
 <% provide(:title, 'All Contents') %>
 
-<h1>案件内容一覧</h1>
+<h1><%= current_user.name %>の案件内容一覧</h1>
 
 <div class="col-md-10 col-md-offset-1">
 
   <div class="btn-users-show">
-    <%= link_to "内容新規作成", new_user_content_path, class: "btn btn-primary" %>
+    <%= link_to "新規作成", new_user_content_path, class: "btn btn-primary" %>
   </div>
 
   <table class="table table-bordered table-condensed table-hover" id="table-contents">
@@ -13,8 +13,10 @@
     <thead>
       <br>
       <tr>
+        <th></th>
         <th>案件内容名</th>
         <th>詳細</th>
+        <th></th>
       </tr>
     </thead>
 
@@ -22,16 +24,16 @@
       <% @contents.each do |content| %>
         <tr>
           <td>
-            <%= link_to "内容編集", edit_user_content_path(content.user_id, content.id),
-                         class: "btn btn-primary" %>
+            <%= link_to "編集", edit_user_content_path(content.user_id, content.id),
+                         class: "btn btn-success" %>
           </td>
           <td><%= content.name %></td>
           <td><%= content.description %></td>
           <td>
-            <%= link_to "内容削除", user_content_path(content.user_id, content.id),
+            <%= link_to "削除", user_content_path(content.user_id, content.id),
                          method: :delete, 
-                         data: { confirm: "削除してよろしいですか？" },
-                         class: "btn btn-primary" %>
+                         data: { confirm: "「#{content.name}」を削除します。よろしいですか？" },
+                         class: "btn btn-danger" %>
           </td>
         </tr>
       <% end %>
