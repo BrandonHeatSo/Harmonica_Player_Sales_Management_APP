@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   }
 
   resources :users, only: [:index, :show, :destroy] do
-    resources :contents
+    resources :contents do
+      resources :sales
+    end
   end
 end
