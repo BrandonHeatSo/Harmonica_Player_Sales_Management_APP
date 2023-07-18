@@ -1,0 +1,36 @@
+<h1>売上一覧</h1>
+
+<%= link_to '新規作成', new_user_content_sale_path(current_user) %>
+
+<%= form_tag(sales_path, method: :get) do %>
+  <%= select_year(Date.today, { start_year: Date.today.year - 5, end_year: Date.today.year + 5 }, { include_blank: true, prefix: 'year' }) %>
+  <%= submit_tag '表示' %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>売上日</th>
+      <th>取引先</th>
+      <th>案件内容</th>
+      <th>売上金額（税込）</th>
+      <th>備考</th>
+      <th>受取方法</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @sales.each do |sale| %>
+      <tr>
+        <td><%= sale.sales_date.strftime('%Y-%m-%d') %></td>
+        <td><%= sale.customer %></td>
+        <td><%= sale.content.name %></td>
+        <td><%= sale.amount %></td>
+        <td><%= sale.note %></td>
+        <td><%= sale.payment_method %></td>
+        <td><%= link_to '編集', edit_user_content_sale_path(current_user, sale) %></td>
+        <td><%= link_to '削除', user_content_sale_path(current_user, sale), method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
