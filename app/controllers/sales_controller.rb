@@ -18,8 +18,7 @@ class SalesController < ApplicationController
   def create
     @sale = current_user.sales.build(sale_params) # ログインユーザーに紐付いた売上データを作成
     if @sale.save
-      redirect_to user_content_sales_path(user_id: current_user.id,
-                                          content_id: @sale.content_id), notice: '売上データの新規作成に成功しました。'
+      redirect_to user_content_sales_path(current_user), notice: '売上データの新規作成に成功しました。'
     else
       render :new
     end
@@ -31,8 +30,7 @@ class SalesController < ApplicationController
 
   def update
     if @sale.update(sale_params)
-      redirect_to user_content_sales_path(user_id: current_user.id,
-                                          content_id: @sale.content_id), notice: '売上データが正常に更新されました。'
+      redirect_to user_content_sales_path(current_user), notice: '売上データが正常に更新されました。'
     else
       render :edit
     end
@@ -40,8 +38,7 @@ class SalesController < ApplicationController
 
   def destroy
     @sale.destroy
-    redirect_to user_content_sales_path(user_id: current_user.id,
-                                        content_id: @sale.content_id), notice: '売上データが正常に削除されました。'
+    redirect_to user_content_sales_path(current_user), notice: '売上データが正常に削除されました。'
   end
 
   private
