@@ -2,7 +2,7 @@
 
 <%= link_to '新規作成', new_user_content_sale_path(current_user) %>
 
-<%= form_tag(sales_path, method: :get) do %>
+<%= form_tag(users_path, method: :get) do %>
   <%= select_year(Date.today, { start_year: Date.today.year - 5, end_year: Date.today.year + 5 }, { include_blank: true, prefix: 'year' }) %>
   <%= submit_tag '表示' %>
 <% end %>
@@ -28,8 +28,8 @@
         <td><%= sale.amount %></td>
         <td><%= sale.note %></td>
         <td><%= sale.payment_method %></td>
-        <td><%= link_to '編集', edit_user_content_sale_path(current_user, sale) %></td>
-        <td><%= link_to '削除', user_content_sale_path(current_user, sale), method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
+        <td><%= link_to '編集', edit_user_content_sale_path(current_user, sale, sale.id) %></td>
+        <td><%= link_to '削除', user_content_sale_path(current_user, sale, sale.id), method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
       </tr>
     <% end %>
   </tbody>

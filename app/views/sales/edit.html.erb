@@ -1,5 +1,40 @@
-<h1>売上データ編集</h1>
+<h1>売上データの編集更新</h1>
 
-<%= render 'form' %>
+<%= form_with(model: @sale, url: user_content_sale_path(current_user, @sale.content, @sale), local: true, method: :patch) do |f| %>
+
+  <div>
+    <%= f.label :sales_date %>
+    <%= f.date_select :sales_date %>
+  </div>
+
+  <div>
+    <%= f.label :customer %>
+    <%= f.text_field :customer %>
+  </div>
+
+  <div>
+    <%= f.label :content_id %>
+    <%= f.collection_select :content_id, current_user.contents, :id, :name, include_blank: true %>
+  </div>
+
+  <div>
+    <%= f.label :amount %>
+    <%= f.number_field :amount %>
+  </div>
+
+  <div>
+    <%= f.label :note %>
+    <%= f.text_field :note %>
+  </div>
+
+  <div>
+    <%= f.label :payment_method %>
+    <%= f.select :payment_method, ['現金', '銀行振込', '電子マネー', 'その他'] %>
+  </div>
+
+  <div>
+    <%= f.submit '更新' %>
+  </div>
+<% end %>
 
 <%= link_to '戻る', user_content_sales_path(current_user) %>

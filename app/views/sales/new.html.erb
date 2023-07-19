@@ -1,5 +1,40 @@
-<h1>新規売上データ作成</h1>
+<h1>新規売上データの作成</h1>
 
-<%= render 'form' %>
+<%= form_with(model: @sale, url: user_content_sales_path(current_user), local: true) do |f| %>
+
+  <div>
+    <%= f.label :sales_date %>
+    <%= f.date_select :sales_date %>
+  </div>
+
+  <div>
+    <%= f.label :customer %>
+    <%= f.text_field :customer %>
+  </div>
+
+  <div>
+    <%= f.label :content_id %>
+    <%= f.collection_select :content_id, current_user.contents, :id, :name, include_blank: true %>
+  </div>
+
+  <div>
+    <%= f.label :amount %>
+    <%= f.number_field :amount %>
+  </div>
+
+  <div>
+    <%= f.label :note %>
+    <%= f.text_field :note %>
+  </div>
+
+  <div>
+    <%= f.label :payment_method %>
+    <%= f.select :payment_method, ['現金', '銀行振込', '電子マネー', 'その他'] %>
+  </div>
+
+  <div>
+    <%= f.submit '新規作成' %>
+  </div>
+<% end %>
 
 <%= link_to '戻る', user_content_sales_path(current_user) %>
