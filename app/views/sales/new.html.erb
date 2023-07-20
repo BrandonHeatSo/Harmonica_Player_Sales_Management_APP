@@ -1,6 +1,7 @@
 <h1>新規売上データの作成</h1>
 
 <%= form_with(model: @sale, url: user_content_sales_path(current_user), local: true) do |f| %>
+  <%= render 'shared/error_messages', object: @sale %>
 
   <div>
     <%= f.label :sales_date %>

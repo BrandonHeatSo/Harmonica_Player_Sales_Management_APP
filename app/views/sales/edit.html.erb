@@ -1,6 +1,7 @@
 <h1>売上データの編集更新</h1>
 
-<%= form_with(model: @sale, url: user_content_sale_path(current_user, @sale.content, @sale), local: true, method: :patch) do |f| %>
+<%= form_with(model: @sale, url: user_content_sale_path(current_user, @sale), local: true, method: :patch) do |f| %>
+  <%= render 'shared/error_messages', object: @sale %>
 
   <div>
     <%= f.label :sales_date %>
@@ -14,7 +15,7 @@
 
   <div>
     <%= f.label :content_id %>
-    <%= f.collection_select :content_id, current_user.contents, :id, :name, include_blank: true %>
+    <%= f.collection_select :content_id, current_user.contents, :id, :name %>
   </div>
 
   <div>
