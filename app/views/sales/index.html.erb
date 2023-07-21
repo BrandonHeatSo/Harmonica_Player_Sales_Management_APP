@@ -24,7 +24,7 @@
       <tr>
         <td><%= sale.sales_date.strftime('%Y-%m-%d') %></td>
         <td><%= sale.customer %></td>
-        <td><%= sale.content.name %></td>
+        <td><%= sale.content ? sale.content.name : content_not_selected_text(sale) %></td>
         <td><%= sale.amount %></td>
         <td><%= sale.note %></td>
         <td><%= sale.payment_method %></td>
