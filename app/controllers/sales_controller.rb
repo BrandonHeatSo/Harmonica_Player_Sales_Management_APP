@@ -3,14 +3,18 @@ class SalesController < ApplicationController
   before_action :set_sale, only: [:edit, :update, :destroy]
 
   def index
-    if params[:year]
-      year = params[:year].to_i
-      @sales = current_user.sales.where("EXTRACT(YEAR FROM sales_date) = ?", year).order(sales_date: :desc)
-    else
-      @sales = current_user.sales.order(sales_date: :desc) # ログインユーザーの売上データを降順で取得
+    # 現在の年の売上データを取得
+    current_year = Time.now.year
+    @sales = current_user.sales.where("strftime('%Y', sales_date) = ?", current_year.to_s).order(sales_date: :desc)
+    # 年の選択肢を生成
+    @available_years = available_years
+    # フォームで年を選択した場合は、選択した年の売上データを表示
+    if params[:date] && params[:date][:year]
+      year = params[:date][:year].to_i
+      @sales = current_user.sales.where("strftime('%Y', sales_date) = ?", year.to_s).order(sales_date: :desc)
     end
   end
-
+  
   def new
     @sale = current_user.sales.build # ログインユーザーに紐付いた新しい売上データを作成
   end
@@ -49,5 +53,16 @@ class SalesController < ApplicationController
 
   def sale_params
     params.require(:sale).permit(:sales_date, :customer, :amount, :note, :payment_method, :content_id)
+  end
+
+  def available_years
+    years_with_sales = current_user.sales.distinct.pluck("strftime('%Y', sales_date)").map(&:to_i)
+    current_year = Time.now.year
+    if years_with_sales.present?
+      all_years = years_with_sales
+    else
+      all_years = [current_year]
+    end
+    all_years.sort.reverse
   end
 end

@@ -2,13 +2,14 @@
 
 <%= link_to '新規作成', new_user_content_sale_path(current_user) %>
 
-<%= form_tag(users_path, method: :get) do %>
-  <%= select_year(Date.today, { start_year: Date.today.year - 5, end_year: Date.today.year + 5 }, { include_blank: true, prefix: 'year' }) %>
+<%= form_tag(user_content_sales_path(current_user), method: :get) do %>
+  <%= select_tag 'date[year]', options_for_select(@available_years, selected: params.dig(:date, :year) || Time.now.year), id: 'year-select' %>
   <%= submit_tag '表示' %>
 <% end %>
 
 <table>
   <thead>
+
     <tr>
       <th>売上日</th>
       <th>取引先</th>
@@ -18,19 +19,22 @@
       <th>受取方法</th>
       <th colspan="2"></th>
     </tr>
+
   </thead>
   <tbody>
     <% @sales.each do |sale| %>
-      <tr>
-        <td><%= sale.sales_date.strftime('%Y-%m-%d') %></td>
-        <td><%= sale.customer %></td>
-        <td><%= sale.content ? sale.content.name : content_not_selected_text(sale) %></td>
-        <td><%= sale.amount %></td>
-        <td><%= sale.note %></td>
-        <td><%= sale.payment_method %></td>
-        <td><%= link_to '編集', edit_user_content_sale_path(current_user, sale, sale.id) %></td>
-        <td><%= link_to '削除', user_content_sale_path(current_user, sale, sale.id), method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
-      </tr>
+      
+        <tr>
+          <td><%= sale.sales_date.strftime('%Y-%m-%d') %></td>
+          <td><%= sale.customer %></td>
+          <td><%= sale.content ? sale.content.name : content_not_selected_text(sale) %></td>
+          <td><%= sale.amount %></td>
+          <td><%= sale.note %></td>
+          <td><%= sale.payment_method %></td>
+          <td><%= link_to '編集', edit_user_content_sale_path(current_user, sale, sale.id) %></td>
+          <td><%= link_to '削除', user_content_sale_path(current_user, sale, sale.id), method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
+        </tr>
+      
     <% end %>
   </tbody>
 </table>
