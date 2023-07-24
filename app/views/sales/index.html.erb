@@ -7,6 +7,11 @@
   <%= submit_tag '表示' %>
 <% end %>
 
+<%= form_tag(generate_csv_sales_path(current_user), method: :get) do %>
+  <%= select_tag 'date[year]', options_for_select(@available_years, selected: params.dig(:date, :year) || Time.now.year), id: 'year-select' %>
+  <%= submit_tag 'CSV出力' %>
+<% end %>
+
 <table>
   <thead>
 
