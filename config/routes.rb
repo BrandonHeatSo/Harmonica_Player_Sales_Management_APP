@@ -12,6 +12,4 @@ Rails.application.routes.draw do
       resources :sales
     end
   end
-
-  get 'users/:user_id/sales/generate_csv', to: 'sales#generate_csv', as: 'generate_csv_sales'
 end

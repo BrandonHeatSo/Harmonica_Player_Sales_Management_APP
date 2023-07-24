@@ -1,6 +1,6 @@
 require_relative 'boot'
+
 require 'rails/all'
-require 'csv' # CSVを取扱う為の大元のメソッド設定
 
 Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8

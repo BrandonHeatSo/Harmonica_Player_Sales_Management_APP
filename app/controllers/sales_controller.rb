@@ -13,6 +13,13 @@ class SalesController < ApplicationController
       year = params[:date][:year].to_i
       @sales = current_user.sales.where("strftime('%Y', sales_date) = ?", year.to_s).order(sales_date: :desc)
     end
+    respond_to do |format| # CSV出力用アクション
+      format.html
+      format.csv do
+        csv_data = SalesCSVExporter.export(@sales, self)
+        send_data csv_data, filename: "#{current_user.name}の#{year}分の売上一覧.csv"
+      end
+    end
   end
   
   def new
