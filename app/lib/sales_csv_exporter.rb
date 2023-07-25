@@ -9,8 +9,9 @@ class SalesCSVExporter
 
       sales.each do |sale|
         content_name = sale.content ? sale.content.name : '' # 案件内容の名前を取得する
+        sales_date_with_weekday = "#{sale.sales_date.strftime('%-m/%-d')} (#{days_of_the_week[sale.sales_date.wday]})"
         csv << [
-          sale.sales_date.strftime('%-m/%-d'),
+          sales_date_with_weekday,
           sale.customer,
           content_name,
           sale.amount,
@@ -19,5 +20,9 @@ class SalesCSVExporter
         ]
       end
     end.prepend(bom) # 生成したCSVデータの先頭にBOMを挿入
+  end
+
+  def self.days_of_the_week
+    %w(日 月 火 水 木 金 土)
   end
 end
