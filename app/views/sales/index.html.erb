@@ -1,42 +1,57 @@
-<h1>売上一覧</h1>
+<% provide(:title, 'All Sales') %>
 
-<%= link_to '新規作成', new_user_content_sale_path(current_user) %>
+<h1><%= current_user.name %>の売上一覧</h1>
 
-<%= form_tag(user_content_sales_path(current_user), method: :get) do %>
-  <%= select_tag 'date[year]', options_for_select(@available_years, selected: params.dig(:date, :year) || Time.now.year), id: 'year-select' %>
-  <%= submit_tag '表示' %>
-<% end %>
+<div class="col-md-12">
 
-<%= link_to 'CSV出力', user_content_sales_path(format: :csv, date: { year: (params.dig(:date, :year) || Time.now.year) }), class: 'csv-link' %>
+  <div class="btn-sales-show">
+    <%= link_to '新規作成', new_user_content_sale_path(current_user), class: "btn btn-primary" %>
+    　<%= link_to 'CSV出力', user_content_sales_path(format: :csv, date: { year: (params.dig(:date, :year) || Time.now.year) }), class: 'csv-link btn btn-warning' %>
+    <br>
+  </div>
 
-<table>
-  <thead>
+  <br>
+  <div class="row sales-display">
+    <%= form_tag(user_content_sales_path(current_user), method: :get) do %>
+      <%= select_tag 'date[year]', options_for_select(@available_years, selected: params.dig(:date, :year) || Time.now.year), id: 'year-select' %> 年分
+      <%= submit_tag '表示' %>
+    <% end %>
 
-    <tr>
-      <th>売上日</th>
-      <th>取引先</th>
-      <th>案件内容</th>
-      <th>売上金額（税込）</th>
-      <th>備考</th>
-      <th>受取方法</th>
-      <th colspan="2"></th>
-    </tr>
+    <div class="pull-right sales-display">
+      売上金額合計：<%= number_to_currency(@total_amount, unit: '¥', format: '%u %n') %>-（税込）
+    </div>
+  </div>
 
-  </thead>
-  <tbody>
-    <% @sales.each do |sale| %>
-      
+  <br>
+  <table class="table table-bordered table-condensed table-hover" id="table-sales">
+    <thead>
+
+      <tr>
+        <th>売上日</th>
+        <th>取引先</th>
+        <th>案件内容</th>
+        <th>売上金額（円･税込）</th>
+        <th>備考</th>
+        <th>受取方法</th>
+        <th colspan="2"></th>
+      </tr>
+
+    </thead>
+    <tbody>
+      <% @sales.each do |sale| %>
+        
         <tr>
-          <td><%= sale.sales_date.strftime('%Y-%m-%d') %></td>
+          <td><%= sale.sales_date.strftime('%-m/%-d') %> (<%= $days_of_the_week[sale.sales_date.wday] %>)</td>
           <td><%= sale.customer %></td>
           <td><%= sale.content ? sale.content.name : content_not_selected_text(sale) %></td>
-          <td><%= sale.amount %></td>
+          <td class="text-right"><%= number_to_currency(sale.amount, format: '%n') %></td>
           <td><%= sale.note %></td>
           <td><%= sale.payment_method %></td>
-          <td><%= link_to '編集', edit_user_content_sale_path(current_user, sale, sale.id) %></td>
-          <td><%= link_to '削除', user_content_sale_path(current_user, sale, sale.id), method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
+          <td><%= link_to '編集', edit_user_content_sale_path(current_user, sale, sale.id), class: "btn btn-success" %></td>
+          <td><%= link_to '削除', user_content_sale_path(current_user, sale, sale.id), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-danger" %></td>
         </tr>
-      
-    <% end %>
-  </tbody>
-</table>
+        
+      <% end %>
+    </tbody>
+  </table>
+</div>

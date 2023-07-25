@@ -13,11 +13,14 @@ class SalesController < ApplicationController
       year = params[:date][:year].to_i
       @sales = current_user.sales.where("strftime('%Y', sales_date) = ?", year.to_s).order(sales_date: :desc)
     end
-    respond_to do |format| # CSV出力用アクション
+    # 表示中の売上金額合計を計算してインスタンス変数に代入
+    @total_amount = @sales.sum(:amount)
+    # CSV出力用アクション
+    respond_to do |format|
       format.html
       format.csv do
         csv_data = SalesCSVExporter.export(@sales, self)
-        send_data csv_data, filename: "#{current_user.name}の#{year}分の売上一覧.csv"
+        send_data csv_data, filename: "#{current_user.name}の#{year}年分の売上一覧.csv"
       end
     end
   end

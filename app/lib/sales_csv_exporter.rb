@@ -10,7 +10,7 @@ class SalesCSVExporter
       sales.each do |sale|
         content_name = sale.content ? sale.content.name : '' # 案件内容の名前を取得する
         csv << [
-          sale.sales_date.strftime('%Y-%m-%d'),
+          sale.sales_date.strftime('%-m/%-d'),
           sale.customer,
           content_name,
           sale.amount,

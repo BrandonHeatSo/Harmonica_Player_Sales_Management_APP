@@ -9,6 +9,6 @@ class Sale < ApplicationRecord
   validates :payment_method, presence: true
 
   # createアクション時とupdateアクション時のみ適用
-  validates :content_id, presence: { message: '案件内容の選択は必須です。選択肢が無ければ、案件内容を作成して下さい。' }, on: [:create, :update]
+  validates :content_id, presence: { message: 'の選択は必須です。選択肢が無ければ、案件内容を作成して下さい。' }, on: [:create, :update]
 
 end

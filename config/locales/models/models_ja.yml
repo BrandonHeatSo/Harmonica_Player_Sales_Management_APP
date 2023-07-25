@@ -3,6 +3,7 @@ ja:
     models:
       user: ユーザー
       content: 案件内容
+      sale: 売上
       
     attributes:
         user:
@@ -17,7 +18,17 @@ ja:
         content:
           id: ID
           name: 案件内容名
-          description: 詳細
+          description: 内容詳細
           created_at: 作成日
           updated_at: 更新日
-          
+
+        sale:
+          id: ID
+          sales_date: 売上日
+          customer: 取引先名
+          content_id: 案件内容
+          amount: 売上金額（税込）
+          note: 備考
+          payment_method: 受取方法
+          created_at: 作成日
+          updated_at: 更新日

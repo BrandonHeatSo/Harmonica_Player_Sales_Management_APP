@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
 
   before_action :config_permitted_parameters, if: :devise_controller?
 
+  $days_of_the_week = %w{日 月 火 水 木 金 土}
+
 private
 
   def config_permitted_parameters

@@ -1,41 +1,44 @@
+<% provide(:title, 'Edit Sale') %>
+
 <h1>売上データの編集更新</h1>
 
-<%= form_with(model: @sale, url: user_content_sale_path(current_user, @sale), local: true, method: :patch) do |f| %>
-  <%= render 'shared/error_messages', object: @sale %>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with(model: @sale, url: user_content_sale_path(current_user, @sale), local: true, method: :patch) do |f| %>
+      <%= render 'shared/error_messages', object: @sale %>
 
-  <div>
-    <%= f.label :sales_date %>
-    <%= f.date_select :sales_date %>
+      <%= f.label :sales_date, class: "label-form" %>
+      <br>
+      <%= f.date_select :sales_date, class: "form-control" %>
+
+      <br>
+      <br>
+      <%= f.label :customer, class: "label-form" %>
+      <%= f.text_field :customer, class: "form-control" %>
+
+      <br>
+      <%= f.label :content_id, class: "label-form" %>
+      <br>
+      <%= f.collection_select :content_id, current_user.contents, :id, :name, class: "form-control" %>
+
+      <br>
+      <br>
+      <%= f.label :amount, class: "label-form" %>
+      <%= f.number_field :amount, value: @sale.amount.to_i, class: "form-control text-right", step: 1, min: 0 %>
+
+      <br>
+      <%= f.label :note, class: "label-form" %>
+      <%= f.text_field :note, class: "form-control" %>
+
+      <br>
+      <%= f.label :payment_method, class: "label-form" %>
+      <br>
+      <%= f.select :payment_method, ['現金', '銀行振込', '電子マネー', 'その他'], class: "form-control" %>
+
+      <br>
+      <br>
+      <%= f.submit '更新', class: "btn btn-lg btn-primary btn-form" %>
+      　<%= link_to '戻る', user_content_sales_path(current_user), class: "btn btn-lg btn-default" %>
+    <% end %>
   </div>
-
-  <div>
-    <%= f.label :customer %>
-    <%= f.text_field :customer %>
-  </div>
-
-  <div>
-    <%= f.label :content_id %>
-    <%= f.collection_select :content_id, current_user.contents, :id, :name %>
-  </div>
-
-  <div>
-    <%= f.label :amount %>
-    <%= f.number_field :amount %>
-  </div>
-
-  <div>
-    <%= f.label :note %>
-    <%= f.text_field :note %>
-  </div>
-
-  <div>
-    <%= f.label :payment_method %>
-    <%= f.select :payment_method, ['現金', '銀行振込', '電子マネー', 'その他'] %>
-  </div>
-
-  <div>
-    <%= f.submit '更新' %>
-  </div>
-<% end %>
-
-<%= link_to '戻る', user_content_sales_path(current_user) %>
+</div>
