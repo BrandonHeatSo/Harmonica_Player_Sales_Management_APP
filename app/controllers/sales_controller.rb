@@ -13,14 +13,23 @@ class SalesController < ApplicationController
       year = params[:date][:year].to_i
       @sales = current_user.sales.where("strftime('%Y', sales_date) = ?", year.to_s).order(sales_date: :desc)
     end
+    # パラメーターでorderが指定されている場合は、昇順・降順を切り替える
+    if params[:order] && %w[asc desc].include?(params[:order])
+      @sales = @sales.reorder(sales_date: params[:order].to_sym)
+    end
     # 表示中の売上金額合計を計算してインスタンス変数に代入
     @total_amount = @sales.sum(:amount)
+    # CSV出力時は常に昇順（古い順）で出力するため、@salesを昇順に並び替える
+    if request.format.csv?
+      year = params[:date][:year].to_i
+      @sales = current_user.sales.where("strftime('%Y', sales_date) = ?", year.to_s).order(sales_date: :asc)
+    end
     # CSV出力用アクション
     respond_to do |format|
       format.html
       format.csv do
-        csv_data = SalesCSVExporter.export(@sales, self)
-        send_data csv_data, filename: "#{current_user.name}の#{year}年分の売上一覧.csv"
+        csv_data = SalesCSVExporter.export(@sales)
+        send_data csv_data, filename: "#{current_user.name} #{year}年分 売上台帳.csv"
       end
     end
   end

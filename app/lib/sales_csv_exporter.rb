@@ -1,7 +1,7 @@
 require 'csv' # CSVを取扱う為の大元のメソッド設定
 
 class SalesCSVExporter
-  def self.export(sales, helper)
+  def self.export(sales)
     bom = "\uFEFF" # 文字化け防止用にBOMを定義。
 
     CSV.generate(headers: true) do |csv|

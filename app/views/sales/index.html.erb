@@ -13,7 +13,8 @@
   <br>
   <div class="row sales-display">
     <%= form_tag(user_content_sales_path(current_user), method: :get) do %>
-      <%= select_tag 'date[year]', options_for_select(@available_years, selected: params.dig(:date, :year) || Time.now.year), id: 'year-select' %> 年分
+      <%= select_tag 'date[year]', options_for_select(@available_years, selected: params.dig(:date, :year) || Time.now.year), id: 'year-select' %> 年分 を　
+      <%= select_tag 'order', options_for_select([['降順（新しい順）', 'desc'], ['昇順（古い順）', 'asc']], params[:order]), class: 'btn-sort' %> で　
       <%= submit_tag '表示' %>
     <% end %>
 

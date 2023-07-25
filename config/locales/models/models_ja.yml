@@ -27,7 +27,7 @@ ja:
           sales_date: 売上日
           customer: 取引先名
           content_id: 案件内容
-          amount: 売上金額（税込）
+          amount: 売上金額（円･税込）
           note: 備考
           payment_method: 受取方法
           created_at: 作成日
