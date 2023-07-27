@@ -8,8 +8,16 @@ class SalesController < ApplicationController
     @sales = current_user.sales.where("strftime('%Y', sales_date) = ?", current_year.to_s).order(sales_date: :desc)
     # 年の選択肢を生成
     @available_years = available_years
-    # フォームで年を選択した場合は、選択した年の売上データを表示
-    if params[:date] && params[:date][:year]
+    # 年に基づいて月の選択肢を取得し、@months_with_salesに設定
+    @available_months = available_months
+    # フォームで年と月を選択した場合は、選択した年と月の売上データを表示
+    if params[:date] && params[:date][:year] && params[:date][:month]
+      year = params[:date][:year].to_i
+      month = params[:date][:month].to_i
+      @sales = current_user.sales.where("strftime('%Y', sales_date) = ? AND strftime('%m', sales_date) = ?", year.to_s, '%02d' % month).order(sales_date: :desc)
+    end
+    # 年選択のみ選択された場合は、選択中の年の全ての月の売上データを表示
+    if params[:date] && params[:date][:year].present? && params[:date][:month].blank?
       year = params[:date][:year].to_i
       @sales = current_user.sales.where("strftime('%Y', sales_date) = ?", year.to_s).order(sales_date: :desc)
     end
@@ -84,4 +92,16 @@ class SalesController < ApplicationController
     end
     all_years.sort.reverse
   end
+ 
+  def available_months
+    if params.dig(:date, :year).present?
+      year = params[:date][:year].to_i
+      months_with_sales = current_user.sales.where("strftime('%Y', sales_date) = ?", year.to_s).distinct.pluck("strftime('%m', sales_date)").map(&:to_i)
+      all_months = (1..12).to_a.to_a.sort.reverse
+      all_months & months_with_sales
+    else
+      (1..12).to_a.sort.reverse
+    end
+  end  
+
 end
