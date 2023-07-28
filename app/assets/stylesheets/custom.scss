@@ -4,7 +4,11 @@
 /* universal */
 
 body {
-  padding-top: 60px;
+  background-image: url('/assets/bluesharp_blowing.png');
+  background-size: auto;
+  background-repeat: no-repeat;
+  background-position: right top;
+  padding-top: 150px; /* 画面最上部からの高さを調整 */
 }
 
 section {
@@ -30,9 +34,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 3em;
+  font-size: 3.5em;
   letter-spacing: -2px;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   text-align: center;
 }
 
@@ -66,6 +70,29 @@ p {
 #logo:hover {
   color: #fff;
   text-decoration: none;
+}
+
+/* ヘッダーのコンテナ */
+.header {
+  position: relative;
+}
+
+/* ヘッダーのロゴ右端に表示する画像のスタイル */
+.header-image {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px; /* 適切なサイズに調整 */
+  height: 30px; /* 適切なサイズに調整 */
+}
+
+/* ヘッダーのロゴ左端に表示する画像のスタイル */
+.header-image-second {
+  position: absolute;
+  top: 10px; /* 適切な位置に調整 */
+  left: 10px; /* 適切な位置に調整 */
+  width: 30px; /* 適切なサイズに調整 */
+  height: 30px; /* 適切なサイズに調整 */
 }
 
 /* debug */
