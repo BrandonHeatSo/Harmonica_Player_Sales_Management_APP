@@ -15,6 +15,9 @@ Devise.setup do |config|
   
   # LINEログインの設定を追加＆Deviseに反映。
   config.omniauth :line, ENV['LINE_KEY'], ENV['LINE_SECRET']
+
+  # Deviseのsecret_keyにランダムな16進数文字列を設定。
+  config.secret_key = '797e4af8ea21acdddb7eee06a2775a16128ca7ead8352ede6c90fd656a29890d893b3809e4abe0709c3278a11ae5c8c2ffd03a2cf746b3817f9ce2c8132e4d0a'
   
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing

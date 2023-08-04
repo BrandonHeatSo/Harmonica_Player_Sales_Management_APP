@@ -5,6 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+ruby '2.7.8'
 gem 'rails', '~> 5.1.7'
 gem 'sqlite3'
 gem 'devise' # LINEログイン用に認証機能の提供Gemを導入。
@@ -49,6 +50,10 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2' # 開発効率向上＆自動化Gemを導入（開発環境下）。
   gem 'spring' # アプリ起動時間の短縮Gemを導入（開発環境下）。
   gem 'spring-watcher-listen', '~> 2.0.0' # ファイル変更の追跡＆反映Gemを導入（開発環境下）。
+end
+
+group :production do
+  gem 'pg', '0.20.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
