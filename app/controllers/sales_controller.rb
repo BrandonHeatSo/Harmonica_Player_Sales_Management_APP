@@ -149,13 +149,11 @@ class SalesController < ApplicationController
     if params.dig(:date, :year).present?
       year = params[:date][:year].to_i
       months_with_sales = current_user.sales.where("strftime('%Y', sales_date) = ?", year.to_s).distinct.pluck("strftime('%m', sales_date)").map(&:to_i)
-      # all_months = (1..12).to_a.sort.reverse
-      # @available_months = months_with_sales & all_months # 修正が必要な行
-      all_months = months_with_sales
+      all_months =  months_with_sales
     else
-      # @available_months = (1..12).to_a.sort.reverse
-      (1..12).to_a.sort.reverse
+      all_months = (1..12).to_a
     end
+    all_months.sort.reverse
   end
   
 end
