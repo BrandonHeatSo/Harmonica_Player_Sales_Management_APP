@@ -25,6 +25,26 @@ class SalesController < ApplicationController
     if params[:order] && %w[asc desc].include?(params[:order])
       @sales = @sales.reorder(sales_date: params[:order].to_sym)
     end
+
+    # @available_years = available_years
+    # @available_months = available_months
+
+    # selected_year = params.dig(:date, :year).to_i
+    # selected_month = params.dig(:date, :month).to_i
+
+    # if selected_year != 0 && selected_month != 0
+      # @sales = current_user.sales.where("strftime('%Y', sales_date) = ? AND strftime('%m', sales_date) = ?", selected_year.to_s, '%02d' % selected_month).order(sales_date: :desc)
+    # elsif selected_year != 0
+      # @sales = current_user.sales.where("strftime('%Y', sales_date) = ?", selected_year.to_s).order(sales_date: :desc)
+    # else
+      # current_year = Time.now.year
+      # @sales = current_user.sales.where("strftime('%Y', sales_date) = ?", current_year.to_s).order(sales_date: :desc)
+    # end
+
+    # if params[:order].in?(['asc', 'desc'])
+      # @sales = @sales.reorder(sales_date: params[:order].to_sym)
+    # end
+
     # 表示中の売上金額合計を計算してインスタンス変数に代入
     @total_amount = @sales.sum(:amount)
     # CSV出力時は常に昇順（古い順）で出力するため、@salesを昇順に並び替える
@@ -82,26 +102,60 @@ class SalesController < ApplicationController
     params.require(:sale).permit(:sales_date, :customer, :amount, :note, :payment_method, :content_id)
   end
 
+  # def available_years
+    # years_with_sales = current_user.sales.distinct.pluck("strftime('%Y', sales_date)").map(&:to_i)
+    # current_year = Time.now.year
+    # if years_with_sales.present?
+      # all_years = years_with_sales
+    # else
+      # all_years = [current_year]
+    # end
+    # all_years.sort.reverse
+  # end
+
+  # def available_months
+    # if params.dig(:date, :year).present?
+      # year = params[:date][:year].to_i
+      # months_with_sales = current_user.sales.where("strftime('%Y', sales_date) = ?", year.to_s).distinct.pluck("strftime('%m', sales_date)").map(&:to_i)
+      # all_months = (1..12).to_a.to_a.sort.reverse
+      # all_months & months_with_sales
+    # else
+      # (1..12).to_a.sort.reverse
+    # end
+  # end
+
   def available_years
-    years_with_sales = current_user.sales.distinct.pluck("strftime('%Y', sales_date)").map(&:to_i)
     current_year = Time.now.year
-    if years_with_sales.present?
-      all_years = years_with_sales
+    if ActiveRecord::Base.connection.adapter_name.downcase == 'postgresql'
+      @years = Sale.where(user_id: current_user.id).pluck("DISTINCT date_part('year', sales_date)::integer")
+      if @years.present?
+        all_years = @years
+      else
+        all_years = [current_year]
+      end
     else
-      all_years = [current_year]
+      # @years = Sale.where(user_id: current_user.id).pluck("DISTINCT strftime('%Y', sales_date) AS year").map { |year| year['year'].to_i }
+      years_with_sales = current_user.sales.distinct.pluck("strftime('%Y', sales_date)").map(&:to_i)
+      if years_with_sales.present?
+        all_years = years_with_sales
+      else
+        all_years = [current_year]
+      end
     end
-    all_years.sort.reverse
+    all_years.sort.reverse    
   end
- 
+
   def available_months
     if params.dig(:date, :year).present?
       year = params[:date][:year].to_i
       months_with_sales = current_user.sales.where("strftime('%Y', sales_date) = ?", year.to_s).distinct.pluck("strftime('%m', sales_date)").map(&:to_i)
-      all_months = (1..12).to_a.to_a.sort.reverse
-      all_months & months_with_sales
+      # all_months = (1..12).to_a.sort.reverse
+      # @available_months = months_with_sales & all_months # 修正が必要な行
+      all_months = months_with_sales
     else
+      # @available_months = (1..12).to_a.sort.reverse
       (1..12).to_a.sort.reverse
     end
-  end  
-
+  end
+  
 end
