@@ -145,13 +145,30 @@ class SalesController < ApplicationController
     # all_years.sort.reverse    
   # end
   
+  # def available_years
+    # current_year = Time.now.year
+    # if Rails.env.production? # 本番環境 (Heroku) では PostgreSQL を使用する
+      # @years = Sale.where(user_id: current_user.id)
+                   # .group("EXTRACT(YEAR FROM sales_date)")
+                   # .pluck("EXTRACT(YEAR FROM sales_date)")
+                   # .map { |year| year.to_i }
+    # else # 開発環境 (SQLite3) では SQLite3 の strftime を使用する
+      # @years = Sale.where(user_id: current_user.id)
+                   # .group("strftime('%Y', sales_date)")
+                   # .pluck("strftime('%Y', sales_date)")
+                   # .map(&:to_i)
+    # end
+    # @years = [current_year] if @years.blank?
+    # @years.sort.reverse
+  # end
+
   def available_years
     current_year = Time.now.year
     if Rails.env.production? # 本番環境 (Heroku) では PostgreSQL を使用する
       @years = Sale.where(user_id: current_user.id)
-                   .group("EXTRACT(YEAR FROM sales_date)")
-                   .pluck("EXTRACT(YEAR FROM sales_date)")
-                   .map { |year| year.to_i }
+                   .group("date_part('year', sales_date)")
+                   .pluck("date_part('year', sales_date)")
+                   .map(&:to_i)
     else # 開発環境 (SQLite3) では SQLite3 の strftime を使用する
       @years = Sale.where(user_id: current_user.id)
                    .group("strftime('%Y', sales_date)")
@@ -161,7 +178,7 @@ class SalesController < ApplicationController
     @years = [current_year] if @years.blank?
     @years.sort.reverse
   end
-
+  
   def available_months
     if params.dig(:date, :year).present?
       year = params[:date][:year].to_i
