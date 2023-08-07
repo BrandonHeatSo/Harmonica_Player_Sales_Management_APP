@@ -149,7 +149,9 @@ class SalesController < ApplicationController
     current_year = Time.now.year
     # @years = Sale.where(user_id: current_user.id).distinct.pluck(:sales_date).map { |date| date.year }
     # @years = Sale.where(user_id: current_user.id).distinct.pluck("date_part('year', sales_date)").map(&:to_i)
-    @years = Sale.where(user_id: current_user.id).group("strftime('%Y', sales_date)").pluck("strftime('%Y', sales_date)").map(&:to_i)
+    # @years = Sale.where(user_id: current_user.id).group("strftime('%Y', sales_date)").pluck("strftime('%Y', sales_date)").map(&:to_i)
+    sales = Sale.where(user_id: current_user.id)
+    @years = sales.pluck(:sales_date).map { |date| date.year }.uniq
     @years = [current_year] if @years.blank?
     @years.sort.reverse
   end
