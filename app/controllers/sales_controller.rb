@@ -162,23 +162,48 @@ class SalesController < ApplicationController
     # @years.sort.reverse
   # end
 
+  # def available_years
+    # current_year = Time.now.year
+    # if Rails.env.production? # 本番環境 (Heroku) では PostgreSQL を使用する
+      # @years = Sale.where(user_id: current_user.id)
+                   # .group("date_part('year', sales_date)")
+                   # .pluck("date_part('year', sales_date)")
+                   # .map(&:to_i)
+    # else # 開発環境 (SQLite3) では SQLite3 の strftime を使用する
+      # @years = Sale.where(user_id: current_user.id)
+                   # .group("strftime('%Y', sales_date)")
+                   # .pluck("strftime('%Y', sales_date)")
+                   # .map(&:to_i)
+    # end
+    # @years = [current_year] if @years.blank?
+    # @years.sort.reverse
+  # end
+  
   def available_years
     current_year = Time.now.year
     if Rails.env.production? # 本番環境 (Heroku) では PostgreSQL を使用する
       @years = Sale.where(user_id: current_user.id)
-                   .group("date_part('year', sales_date)")
-                   .pluck("date_part('year', sales_date)")
+                   .group("EXTRACT(YEAR FROM sales_date)")
+                   .pluck("EXTRACT(YEAR FROM sales_date) AS year")
                    .map(&:to_i)
-    else # 開発環境 (SQLite3) では SQLite3 の strftime を使用する
-      @years = Sale.where(user_id: current_user.id)
-                   .group("strftime('%Y', sales_date)")
-                   .pluck("strftime('%Y', sales_date)")
-                   .map(&:to_i)
+    else # 開発環境ではデータベースに応じてクエリを切り替える
+      adapter = ActiveRecord::Base.connection.adapter_name.downcase.to_sym
+      if adapter == :sqlite
+        @years = Sale.where(user_id: current_user.id)
+                     .group("strftime('%Y', sales_date)")
+                     .pluck("strftime('%Y', sales_date) AS year")
+                     .map(&:to_i)
+      elsif adapter == :postgresql
+        @years = Sale.where(user_id: current_user.id)
+                     .group("DATE_PART('YEAR', sales_date)")
+                     .pluck("DATE_PART('YEAR', sales_date) AS year")
+                     .map(&:to_i)
+      end
     end
     @years = [current_year] if @years.blank?
     @years.sort.reverse
   end
-  
+
   def available_months
     if params.dig(:date, :year).present?
       year = params[:date][:year].to_i
