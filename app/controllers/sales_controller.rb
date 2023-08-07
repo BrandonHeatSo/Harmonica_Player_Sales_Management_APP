@@ -124,25 +124,34 @@ class SalesController < ApplicationController
     # end
   # end
 
+  # def available_years
+    # current_year = Time.now.year
+    # if ActiveRecord::Base.connection.adapter_name.downcase == 'postgresql'
+      # @years = Sale.where(user_id: current_user.id).pluck("DISTINCT date_part('year', sales_date)::integer")
+      # if @years.present?
+        # all_years = @years
+      # else
+        # all_years = [current_year]
+      # end
+    # else
+      # @years = Sale.where(user_id: current_user.id).pluck("DISTINCT strftime('%Y', sales_date) AS year").map { |year| year['year'].to_i }
+      # years_with_sales = current_user.sales.distinct.pluck("strftime('%Y', sales_date)").map(&:to_i)
+      # if years_with_sales.present?
+        # all_years = years_with_sales
+      # else
+        # all_years = [current_year]
+      # end
+    # end
+    # all_years.sort.reverse    
+  # end
+
   def available_years
     current_year = Time.now.year
-    if ActiveRecord::Base.connection.adapter_name.downcase == 'postgresql'
-      @years = Sale.where(user_id: current_user.id).pluck("DISTINCT date_part('year', sales_date)::integer")
-      if @years.present?
-        all_years = @years
-      else
-        all_years = [current_year]
-      end
-    else
-      # @years = Sale.where(user_id: current_user.id).pluck("DISTINCT strftime('%Y', sales_date) AS year").map { |year| year['year'].to_i }
-      years_with_sales = current_user.sales.distinct.pluck("strftime('%Y', sales_date)").map(&:to_i)
-      if years_with_sales.present?
-        all_years = years_with_sales
-      else
-        all_years = [current_year]
-      end
-    end
-    all_years.sort.reverse    
+    # @years = Sale.where(user_id: current_user.id).distinct.pluck(:sales_date).map { |date| date.year }
+    # @years = Sale.where(user_id: current_user.id).distinct.pluck("date_part('year', sales_date)").map(&:to_i)
+    @years = Sale.where(user_id: current_user.id).group("strftime('%Y', sales_date)").pluck("strftime('%Y', sales_date)").map(&:to_i)
+    @years = [current_year] if @years.blank?
+    @years.sort.reverse
   end
 
   def available_months
