@@ -17,25 +17,24 @@
   <br>
   <div class="row sales-display">
 
-
-
     <%= form_tag(user_content_sales_path(current_user), method: :get) do %>
-      <%= select_tag 'date[year]', options_for_select(@available_years, selected: params.dig(:date, :year)), id: 'year-select' %> 年分 を　
+      <%= select_tag 'date[year]', options_for_select(@available_years, selected: (params.dig(:date, :year) || @current_year)), id: 'year-select' %> 年分 を
       <%= select_tag 'order', options_for_select([['新しい順', 'desc'], ['古い順', 'asc']], params[:order]), class: 'btn-sort' %> で　
-      <%= submit_tag '全表示' %>
+      <%= submit_tag '表示' %>
       <br>
       <br>
       　その年の <%= select_tag 'date[month]', options_for_select(@available_months, selected: params.dig(:date, :month)), include_blank: '全', id: 'month-select', class: 'btn-sort' %> 月分 を
       <%= submit_tag '再表示' %>
       <br>
       　（全表示ボタン を押した後に押して下さい ）
+      <br>
+      　（表示の年 を変えた後は 再度ボタンを押して下さい ）
     <% end %>
   
     <div class="pull-right sales-display">
       売上金額合計：<%= number_to_currency(@total_amount, unit: '¥', format: '%u %n') %>-（税込）
     </div>
   </div>
-
 
   <br>
   <table class="table table-bordered table-condensed table-hover" id="table-sales">
