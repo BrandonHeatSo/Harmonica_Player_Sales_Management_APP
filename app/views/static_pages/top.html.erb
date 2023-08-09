@@ -2,7 +2,7 @@
 <div class="center jumbotron">
   <h1>ハーモニカ奏者向け売上管理アプリ</h1>
   <%= link_to "アカウント作成", new_user_registration_path, class: "btn btn-lg btn-warning" %>
-  　<%= link_to "ログイン", new_user_session_path, class: "btn btn-lg btn-primary" %>
-  　<%= link_to "LINEでログイン", user_line_omniauth_authorize_path, method: :post, class: "btn btn-lg btn-success btn-line-login" %>
-  　<%#= link_to "facebookアカウントでログイン", user_facebook_omniauth_authorize_path, method: :post, class: "btn btn-success btn-block btn-facebook-login" %>
+  　<%= link_to "ログイン", new_user_session_path, class: "btn btn-lg btn-success" %>
+  　<%#= link_to "LINEでログイン", user_line_omniauth_authorize_path, method: :post, class: "btn btn-lg btn-success btn-line-login" %>
+  　<%= link_to "facebookでログイン", user_facebook_omniauth_authorize_path, method: :post, class: "btn btn-lg btn-primary btn-facebook-login" %>
 </div>
