@@ -23,7 +23,7 @@
 
       <div class="actions">
         <%= f.submit "ログイン", class: "btn btn-primary btn-block btn-login" %>
-        <%= link_to "LINEでログイン", user_line_omniauth_authorize_path, class: "btn btn-success btn-block btn-line-login" %>
+        <%= link_to "LINEでログイン", user_line_omniauth_authorize_path, method: :post, class: "btn btn-success btn-block btn-line-login" %>
       </div>
     <% end %>
 
