@@ -17,8 +17,6 @@
       <% end %>
 
       <%= f.submit "ログイン", class: "btn btn-primary btn-block btn-login" %>
-      <!-- LINEログインボタン -->
-      <%= link_to "LINEでログイン", user_line_omniauth_authorize_path, class: "btn btn-success btn-block btn-line-login" %>
     <% end %>
     <p>
       ユーザー登録がまだの場合は<%= link_to "こちら", new_user_registration_path %>
