@@ -11,7 +11,7 @@ gem 'sqlite3'
 gem 'devise' # LINEログイン用に認証機能の提供Gemを導入。
 gem 'responders' # devise gem と依存するレスポンスGemを導入。
 gem 'omniauth' # API用の認証Gemを導入。
-gem 'omniauth-facebook' # Facebookログイン用の認証Gemを導入。
+# gem 'omniauth-facebook' # Facebookログイン用の認証Gemを導入。
 gem 'omniauth-line' # LINEログイン用の認証Gemを導入。
 gem 'omniauth-rails_csrf_protection' # APIログイン用のCSRF対策保護Gemを導入。
 gem 'dotenv-rails' # APIキーの非公開環境変数設定用Gemを導入。

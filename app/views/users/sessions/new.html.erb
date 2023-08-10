@@ -9,11 +9,13 @@
         <%= f.email_field :email, class: 'form-control' %>
       </div>
 
+      <br>
       <div class="field">
         <%= f.label :password, "パスワード", class: "label-login" %>
         <%= f.password_field :password, class: 'form-control' %>
       </div>
 
+      <br>
       <% if devise_mapping.rememberable? %>
         <div class="field">
           <%= f.label :remember_me, "ログイン情報を記憶する", class: "checkbox inline checkbox-login" %>
@@ -21,12 +23,15 @@
         </div>
       <% end %>
 
+      <br>
       <div class="actions">
         <%= f.submit "ログイン", class: "btn btn-primary btn-block btn-login" %>
+        <br>
         <%= link_to "LINEでログイン", user_line_omniauth_authorize_path, method: :post, class: "btn btn-success btn-block btn-line-login" %>
       </div>
     <% end %>
 
+    <br>
     <p>
       ユーザー登録がまだの場合は<%= link_to "こちら", new_user_registration_path %>
     </p>

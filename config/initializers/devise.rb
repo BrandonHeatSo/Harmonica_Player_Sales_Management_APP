@@ -14,7 +14,7 @@ Devise.setup do |config|
   config.scoped_views = true
   
   # Facebookログイン用の非公開キー設定を追加＆Deviseに反映。
-  config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_SECRET_KEY']
+  # config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_SECRET_KEY']
 
   # LINEログインの設定を追加＆Deviseに反映。
   config.omniauth :line, ENV['LINE_KEY'], ENV['LINE_SECRET']
