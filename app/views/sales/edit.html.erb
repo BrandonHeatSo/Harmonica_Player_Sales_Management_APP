@@ -21,10 +21,16 @@
       <br>
       <%= f.collection_select :content_id, current_user.contents, :id, :name, class: "form-control" %>
 
+      <% if !@user_contents_exist %>
+        <p class="text-danger">　　　※選択肢がありません。</p>
+        <p class="text-danger">　　　　まず【 案件内容の管理 】ページにて、</p>
+        <p class="text-danger">　　　　１つ以上の案件内容を作成してください。</p>
+      <% end %>
+      
       <br>
       <br>
       <%= f.label :amount, class: "label-form" %>
-      <%= f.number_field :amount, value: @sale.amount.to_i, class: "form-control text-right", step: 1, min: 0 %>
+      <%= f.number_field :amount, value: @sale.amount.to_i, class: "form-control text-right", step: 1, min: 0, style: "width: 160px;" %>
 
       <br>
       <%= f.label :note, class: "label-form" %>

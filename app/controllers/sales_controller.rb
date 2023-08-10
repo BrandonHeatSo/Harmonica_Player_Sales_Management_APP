@@ -70,6 +70,7 @@ class SalesController < ApplicationController
   
   def new
     @sale = current_user.sales.build # ログインユーザーに紐付いた新しい売上データを作成
+    @user_contents_exist = current_user.contents.exists? # 案件内容の選択肢がゼロかどうかの確認定義
   end
 
   def create
@@ -83,6 +84,7 @@ class SalesController < ApplicationController
 
   def edit
     # @saleはbefore_actionでセット済み
+    @user_contents_exist = current_user.contents.exists? # 案件内容の選択肢がゼロかどうかの確認定義
   end
 
   def update

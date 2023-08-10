@@ -28,6 +28,8 @@
         <%= f.submit "ログイン", class: "btn btn-primary btn-block btn-login" %>
         <br>
         <%= link_to "LINEでログイン", user_line_omniauth_authorize_path, method: :post, class: "btn btn-success btn-block btn-line-login" %>
+        <%#= link_to "facebookアカウントでログイン", user_facebook_omniauth_authorize_path, class: "btn btn-success btn-block btn-facebook-login" %>
+
       </div>
     <% end %>
 

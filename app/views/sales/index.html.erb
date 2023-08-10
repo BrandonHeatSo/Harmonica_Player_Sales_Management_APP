@@ -6,10 +6,10 @@
 
   <div class="btn-sales-show">
     <%= link_to '新規作成', new_user_content_sale_path(current_user), class: "btn btn-primary" %>
-    　　<%= link_to 'CSV出力', user_content_sales_path(format: :csv, date: { year: (params.dig(:date, :year) || Time.now.year) }), class: 'csv-link btn btn-warning' %>
+    　　　<%= link_to 'CSV出力', user_content_sales_path(format: :csv, date: { year: (params.dig(:date, :year) || Time.now.year) }), class: 'csv-link btn btn-warning' %>
     ※ 表示年の全月分のみ
     <br>
-    　　　　　　　　　　　　　　　（古い順のみ）出力可
+    　　　　　　　　　　　　　　　　（古い順のみ）出力可
     <br>
     <br>
   </div>
@@ -26,9 +26,9 @@
       　その年の <%= select_tag 'date[month]', options_for_select(@available_months, selected: params.dig(:date, :month)), include_blank: '全', id: 'month-select', class: 'btn-sort' %> 月分 を
       <%= submit_tag '再表示' %>
       <br>
-      　（全表示ボタン を押した後に押して下さい ）
+      　（ 全表示ボタン を押した後に押して下さい ）
       <br>
-      　（表示の年 を変えた後は 再度ボタンを押して下さい ）
+      　（ 表示の年 を変えた後は 再度ボタンを押して下さい ）
     <% end %>
   
     <div class="pull-right sales-display">
