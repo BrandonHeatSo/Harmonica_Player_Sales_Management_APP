@@ -35,10 +35,16 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       end
       @profile.set_values(@omniauth)
       sign_in(:user, @profile)
+
+      # ログイン後のflash messageとリダイレクト先を設定
+      flash[:notice] = "LINEでのログインに成功しました。"
+
+      # ログイン後にリダイレクトする先を redirect_to expendable_items_path から user_path に変更
+      redirect_to user_path(@profile)
+    else
+      flash[:alert] = "LINEでのログインに失敗しました。"
+      redirect_to root_path
     end
-    # ログイン後のflash messageとリダイレクト先を設定
-    flash[:notice] = "ログインしました"
-    redirect_to root_path # redirect_to expendable_items_path から変更。
   end
 
   def fake_email(uid, provider)
